@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="aos-by-red.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+      body {
+        background-color: rgb(244, 247, 248);
+        margin: 0; /* Remove default body margin */
+        
+    }
+    
+    #up {
+        padding: 20px 30px 0px 5px;
+        display: flex;
+    }
+    
+    #top {
+        background-color: rgb(13, 3, 56);
+        position:absolute;
+        top: 0;
+        right: 0;
+        width: calc(100% - 520px);
+        height: 50px;
+        display: flex; /* Use flexbox to layout the items */
+        align-items: center; /* Center items vertically */
+        justify-content: space-between; /* Space items evenly */
+        padding: 0 10px;
+        z-index: 1000;
+        border-radius: 0 0px 0px 30px;
+    }
+    
+    
+    .top-item {
+        padding: 5px 10px;
+        background-color: rgb(13, 3, 56);
+        color: white;
+        font-family: sans-serif;
+    }
+    .apply-now-button {
+        font-family: Arial, sans-serif;
+        font-weight: bolder;
+    
+        justify-content: center;
+    }
+    
+    
+    .slider {
+        position: relative;
+        width: 100%;
+        height: 550px; /* Adjust height as needed */
+        overflow: hidden;
+    }
+    #mission{
+        z-index: 200;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        top: 10%;
+        justify-content: center;
+        align-items:flex-start;
+        font-size: 96px;
+        color: rgb(247, 248, 242);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5);
+        font-family: sans-serif;
+        
+        z-index: 1;
+    
+    }
+    #long_text {
+        max-width: 80%;
+        padding: 20px;
+        text-align:center;
+        font-size: 16px; /* Adjust as needed */
+        line-height: 1.5; /* Adjust as needed */
+        position: absolute;
+        align-items: center;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5);
+        font-family: sans-serif;
+        
+        z-index: 1;
+    }
+    #pictures {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+      }
+      
+      .image-container {
+        text-align: center;
+        height: 300px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.568); /* Add gray shadow */
+        padding: 10px;
+        border-radius: 20px;
+    
+      }
+      .img-container {
+        text-align: center;
+        height: 300px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.568); /* Add gray shadow */
+        padding: 10px;
+        border-radius: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Add transition */
+      }
+    
+      .img-container:hover {
+        background-color: #3498db;
+        transform: translateY(-10px); /* Slide up */
+        color: white; /* Text color change */
+      }
+    
+      .img-container:hover img {
+        filter: brightness(0) invert(1); /* Make image white on hover */
+      }
+    
+      .img-container img {
+        height: 65px;
+        width: 78px;
+        transition: filter 0.3s ease; /* Add transition for image filter */
+      }
+    
+      .img-container div {
+        font-size: 25px;
+        margin-top: 20px;
+      }
+    
+      .img-container p {
+        margin-top: 10px;
+        font-size: 15px;
+      }
+    
+    
+    
+      #under{
+        margin-top: 30px;
+        font-family: sans-serif;
+        font-size: 20px;
+        text-decoration: solid;
+    
+      }
+      
+    
+    
+    .slide-up-animation {
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    
+    .slide-up {
+        opacity: 1;
+    }
+    
+    
+    .slide {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+    
+    .slide.active {
+        opacity: 1;
+    }
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.521); /* Semi-transparent blue color */
+        z-index: 1; /* Ensure overlay appears above the image */
+    }
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure the image covers the entire slide */
+        animation: zoomInOut 5s infinite alternate; /* Zoom-in/out animation */
+    }
+    
+    .text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 100px; /* Adjust font size as needed */
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+        z-index: 1; /* Ensure text appears above the image */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to improve visibility */
+        font-family: sans-serif;
+    }
+    .text-overlay1 {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 100px; /* Adjust font size as needed */
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+        z-index: 1; /* Ensure text appears above the image */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to improve visibility */
+        font-family: sans-serif;
+    }
+    .text{
+        color: rgb(255, 255, 255);
+        font-size: 50px; /* Adjust font size as needed */
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+        position: absolute;
+        top: 68%; /* Adjust vertical position */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to improve visibility */
+        font-family: sans-serif;
+    }
+    .text1{
+        color: white;
+        font-size: 30px; /* Adjust font size as needed */
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+        position: absolute;
+        top: 85%; /* Adjust vertical position */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to improve visibility */
+        font-family: sans-serif;
+    }
+    
+    @keyframes zoomInOut {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(1.1);
+        }
+    }
+    .buttons {
+        position: absolute;
+        top: 80px;
+        right: 10px;
+    }
+    
+    .dropdown-button {
+        background-color:rgb(244, 247, 248);
+        color: rgb(244, 247, 248);
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-right: 10px;
+        color: black;
+    }
+    
+    .apply-now-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    /* new page
+    */
+    
+    
+    
+    
+        /* Add this style to make the button behave as an inline element */
+        .dropdown-button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            position: relative; /* Ensure proper positioning of the image */
+        }
+        
+        .dropdown-button img {
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+             transition: transform 0.3s;
+        }
+        .dropdown-button img:hover {
+    transform: rotate(180deg); /* Rotate the image when dropdown is hovered */
+}
+        
+        /* Styles for the dropdown menu */
+        .dropdown {
+            position: relative;
+            display: flex;
+            padding-left: 30px;
+            right: 2%;
+            font-family: sans-serif;
+            margin-top: 0px;
+            height: 65px;
+            font-size: 17px;
+            font-weight:bold;
+            color: #0c0c0cbb;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 2;
+            top: calc(100% + 10px);
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+        
+        .show {
+            display: block;
+        }
+        .buttons {
+            display: flex;
+        }
+        
+
+.dropdown:hover {
+    box-shadow: 0px 10px 9px -8px #0000FF; /* Blue glow effect at the bottom */
+}
+html, body {
+    font-family: 'Dongle', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .text-container {
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 96px;
+    color: white;
+    opacity: 0.8;
+    user-select: none;
+    text-shadow: 1px 1px rgba(0,0,0,0.1);
+  }
+  
+  :root {
+    --color-bg1: rgb(108, 0, 162);
+    --color-bg2: rgb(0, 17, 82);
+    --color1: 18, 113, 255;
+    --color2: 221, 74, 255;
+    --color3: 100, 220, 255;
+    --color4: 200, 50, 50;
+    --color5: 180, 180, 50;
+    --color-interactive: 140, 100, 255;
+    --circle-size: 80%;
+    --blending: hard-light;
+  }
+  
+  @keyframes moveInCircle {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes moveVertical {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(50%);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+  
+  @keyframes moveHorizontal {
+    0% {
+      transform: translateX(-50%) translateY(-10%);
+    }
+    50% {
+      transform: translateX(50%) translateY(10%);
+    }
+    100% {
+      transform: translateX(-50%) translateY(-10%);
+    }
+  }
+  
+  
+  .gradient-bg {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+    top: 0;
+    left: 0;
+  
+    svg {
+      display: none;
+    }
+  
+  
+    .gradients-container {
+      filter: url(#goo) blur(40px) ;
+      width: 100%;
+      height: 100%;
+    }
+  
+    .g1 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+  
+      transform-origin: center center;
+      animation: moveVertical 30s ease infinite;
+  
+      opacity: 1;
+    }
+  
+    .g2 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+  
+      transform-origin: calc(50% - 400px);
+      animation: moveInCircle 20s reverse infinite;
+  
+      opacity: 1;
+    }
+  
+    .g3 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2 + 200px);
+      left: calc(50% - var(--circle-size) / 2 - 500px);
+  
+      transform-origin: calc(50% + 400px);
+      animation: moveInCircle 40s linear infinite;
+  
+      opacity: 1;
+    }
+  
+    .g4 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+  
+      transform-origin: calc(50% - 200px);
+      animation: moveHorizontal 40s ease infinite;
+  
+      opacity: 0.7;
+    }
+  
+    .g5 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: calc(var(--circle-size) * 2);
+      height: calc(var(--circle-size) * 2);
+      top: calc(50% - var(--circle-size));
+      left: calc(50% - var(--circle-size));
+  
+      transform-origin: calc(50% - 800px) calc(50% + 200px);
+      animation: moveInCircle 20s ease infinite;
+  
+      opacity: 1;
+    }
+  
+    .interactive {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+  
+      width: 100%;
+      height: 100%;
+      top: -50%;
+      left: -50%;
+  
+      opacity: 0.7;
+    }
+  }
+  button:hover {
+    box-shadow: 0 0 15px 1px blue; /* Adjust the glow effect as needed */
+  }
+  #nextImageText{
+    position: absolute;
+    color: rgb(15, 15, 15);
+    font-size: 24px;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+        
+        
+        
+        
+        
+    </style>
+</head>
+<body>
+    <div id="up" style="font-family: sans-serif;">
+        <img id="Logo" src="./images/logo.png" alt="St Thomas' Logo" style="height: 130px;width: 430px;">
+        <div class="buttons" style="height: 50px;">
+            <div class="dropdown" onmouseleave="closeDropdown('dropdown1') ">
+                <span style="padding-right: 10px;">Dropdown 1</span>
+                <button onmouseover="toggleDropdown('dropdown1')" class="dropdown-button"><img src="./images/dropdown.png" alt=""></button>
+                <div id="dropdown1" class="dropdown-content">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="dropdown" onmouseleave="closeDropdown('dropdown2')">
+                <span style="padding-right: 10px;">Dropdown 2</span>
+                <button onmouseover="toggleDropdown('dropdown2')" class="dropdown-button"><img src="./images/dropdown.png" alt=""></button>
+                <div id="dropdown2" class="dropdown-content">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="dropdown" onmouseleave="closeDropdown('dropdown3')">
+                <span style="padding-right: 10px;">Dropdown 3</span>
+                <button onmouseover="toggleDropdown('dropdown3')" class="dropdown-button"><img src="./images/dropdown.png" alt=""></button>
+                <div id="dropdown3" class="dropdown-content">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="dropdown" onmouseleave="closeDropdown('dropdown4')">
+                <span style="padding-right: 10px;">Dropdown 4</span>
+                <button onmouseover="toggleDropdown('dropdown4')" class="dropdown-button"><img src="./images/dropdown.png" alt=""></button>
+                <div id="dropdown4" class="dropdown-content">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="dropdown" onmouseleave="closeDropdown('dropdown5')">
+                <span style="padding-right: 10px;">Dropdown 5</span>
+                <button onmouseover="toggleDropdown('dropdown5')" class="dropdown-button"><img src="./images/dropdown.png" alt=""></button>
+                <div id="dropdown5" class="dropdown-content">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div style="margin-right: 10px; margin-top: -10px;margin-bottom:30px;position:relative">
+              <a href="https://www.ieee.org/" style="text-decoration: none;">
+                <button style="height: 50px; width: 120px; border: 2px solid blue; color: blue; border-radius: 30px;">IEEE</button>
+              </a>
+            </div>
+            
+        </div>
+    
+    </div>
+
+    <div id="top">
+        <div class="top-item">Item 1</div>
+        <div class="top-item">Item 2</div>
+        <div class="top-item">Item 3</div>
+        <div class="top-item">Item 4</div>
+        <div class="top-item">Item 5</div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+    </div>
+    <div class="slider">
+        <div class="slide active">
+            <img src="./images/stcet1.jpg" alt="Image 1">
+            <div class="overlay"></div>
+            <div class="text-overlay1">IEEE</div>
+            <div class="text-overlay">St. Thomas College</div>
+            <div class="text">Of Engineering & technology</div>
+            
+        </div>
+        <div class="slide">
+            <img src="./images/stcet2.jpeg" alt="Image 2">
+            <div class="overlay"></div>
+            <div class="text-overlay1">IEEE</div>
+            <div class="text-overlay">St. Thomas College</div>
+            <div class="text">Of Engineering & technology</div>
+            
+        </div>
+        <div class="slide">
+            <img src="./images/stcet3.jpg" alt="Image 3">
+            <div class="overlay"></div>
+            <div class="text-overlay1">IEEE</div>
+            <div class="text-overlay">St. Thomas College</div>
+            <div class="text">Of Engineering & technology</div>
+            
+        </div>
+        <!-- Add more slide divs as needed -->
+    </div>
+    <div style="height:450px;width:100%">
+      <div id="pictures" style="display: flex;">
+        <div class="image-container" data-aos="fade-right"  >
+          <img src="./images/aicte.png" alt="" style="height: 200px;width:200px">
+          <div id="under">
+            Approved By AICTE
+          </div>
+        </div >
+        <div class="image-container" data-aos="fade-up">
+          <img src="./images/images-removebg-preview.png" alt="" style="height: 230px;width:230px" >
+          <div id="under">
+            Affiliated to MAKAUT, WB
+          </div>
+        </div >
+        <div class="image-container" data-aos="fade-left">
+          <img src="./images/National_Board_of_Accreditation.svg.png" alt="" style="height: 200px;width:200px">
+          <div id="under">
+            NBA Accredited Programmes Available
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="about" style="font-family:sans-serif;border-radius: 5px;;height: 300px; width: 60%; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); padding: 20px; position: relative; margin: 20px auto;"data-aos="fade-up">
+      <h1>About Us</h1>
+      <div style="font-family:sans-serif;height: 150px; width: 100%; ;font-size:medium;">
+        St. Thomas’ College of Engineering & Technology in Kolkata is a prestigious institution renowned for its academic excellence and holistic student development. With a wide range of engineering programs, experienced faculty, state-of-the-art infrastructure, and emphasis on research and innovation, the college provides a comprehensive education. It also offers a vibrant campus life, encouraging extracurricular activities and industry interactions, shaping students into competent professionals and responsible citizens, ready to make significant contributions to society.
+      </div>
+      <div>
+        <a href="https://stcet.ac.in/" style="text-decoration: none;">
+          <button style="height: 50px; width: 150px; border: 2px solid blue; color: blue; border-radius: 30px;">More About STCET</button>
+        </a>
+        
+        <a href="https://www.ieee.org/" style="text-decoration: none;">
+          <button style="height: 50px; width: 150px; border: 2px solid blue; color: blue; border-radius: 30px;">More about IEEE</button>
+        </a>
+        
+      </div>
+    </div>
+    
+    
+    <div class="gradient-bg">
+      <div style="height: 100px; width: 100px; position: absolute; top: 30px; left: 3%; z-index: 2;" >
+          <img src="./images/quote-open-yellowOL.svg" alt="">
+      </div>
+      <div style="height: 100px; width: 100px; position: absolute; top: 400px; left: 90%; z-index: 3;" >
+          <img src="./images/quote-close-pink.svg" alt="">
+      </div>
+      <div style=" z-index:3;margin-top:330px;margin-left: 720px; position: relative;position: absolute;"data-aos="fade-up">
+        <a href="https://edu.ieee.org/in-stcet/codigo_home/" style="text-decoration: none; position: relative; margin-top: 20px;">
+          <button style="height: 30px; width: 100px; border: 2px solid blue; color: blue; border-radius: 30px;">Know More</button>
+      </a>
+      </div>
+      <div id="white" style="border-radius: 30px; height: 300px; width: 700px; z-index: 1; display: flex; justify-content: center; align-items: center; margin-top: 80px; margin-left: 30px; position: relative; overflow: hidden;" data-aos="fade-up">
+          <img id="sliderImage" src="./images/codigo.jpg" alt="" style="height: 100%; width: 100%; border-radius: 30px; object-fit: cover;">
+      </div>
+
+      <div id="nextWhite" style="border-radius: 30px; background-color: rgb(224, 219, 219); height: 300px; width: 700px; z-index: 2; display: flex; justify-content: center; align-items: flex-start; margin-top: -250px; margin-left: 600px; position: relative;" data-aos="fade-up">
+        <div>
+          
+        </div>
+        <h1 style="text-align: center; margin-top: 100px;">CODIGO – Code Your Way to Victory</h1>
+
+        <div  style="border-radius:30px;font-family:sans-serif;background-color:rgb(250, 214, 166);margin-top: 40px; width: 90%; max-height: 200px; overflow-y: auto; padding: 10px;">
+            <p>
+                The Tech Coding Event at St. Thomas’ College of Engineering Technology, Kolkata is scheduled to take place on March 15 – 16, 2024. This event will feature several highlights, including code crafters, code debugging, code rush, and a tech quiz. The event's awards include cash prizes, mementos, and certificates for the 1st and 2nd winners, while the 3rd winner will receive a certificate and a memento. Additionally, all participants will be honored with a participation certificate. The last date for event registration is February 25, 2024.
+            </p>
+            <p>
+                The Code Crafters Challenge will require participants to develop Python code based on the provided questions. This competition consists of two rounds and offers cash prizes for the top three winners. The event schedule will encompass registration, inauguration, breaks, and the finals for various competitions, including the tech quiz.
+            </p>
+        </div>
+        
+    </div>
+
+    
+    
+    
+      <svg xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <filter id="goo">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                  <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+                  <feBlend in="SourceGraphic" in2="goo" />
+              </filter>
+          </defs>
+      </svg>
+      <div class="gradients-container">
+          <div class="g1"></div>
+          <div class="g2"></div>
+          <div class="g3"></div>
+          <div class="g4"></div>
+          <div class="g5"></div>
+          <div class="interactive"></div>
+      </div>
+  </div>
+  <div style="height:450px;width:100%;">
+    <div id="pictures" style="display: flex;">
+      <div class="img-container" data-aos="fade-right"  >
+        <img src="./images/pngegg (2).png" alt="" style="height: 65px;width:78px">
+        <div id="under" style="font-weight: bold;font-size:25x">
+          Our Mission
+        </div>
+        <div style="margin-top: 30px;width:auto;font-size:15px;">
+          To enhance the quality of engineering education and delivery through accessible, comprehensive and research oriented teaching-learning-assessment processes in the state-of-art environment.
+        </div>
+      </div >
+      <div class="img-container" data-aos="fade-up">
+        <img src="./images/pngegg (3).png" alt="" style="height: 69px;width:78px;margin-top: 10px" >
+        <div id="under" style="font-weight: bold;font-size:25x">
+          Our Vission
+        </div>
+        <div style="margin-top: 30px;font-size:15px">
+          To evolve as an industry oriented, research based Institution for creative solutions in various engineering domains, with an ultimate objective of meeting technological challenges faced by the Nation and the Society.
+        </div>
+      </div >
+      <div class="img-container" data-aos="fade-left">
+        <img src="./images/work.png" alt="" style="height: 65px;width:78px">
+        <div id="under"style="font-weight: bold;font-size:25x">
+          Our Work
+        </div>
+        <div style="margin-top: 30px;font-size:15px">
+          
+Our Activities
+Conducting various events like seminars, workshops, paper presentations, and tech quizzes, where students work, cooperate, coordinate and compete to, develop their intellectual as well as professional skills
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="height:400px;width:100%;" data-aos="fade-up">
+    <div style="color: #0c0c0c; font-size: 30px; text-align: center;padding:50px;margin-right:50px;">
+        Contact Us
+    </div>
+    <div style="height:400px;width:100%;display:flex">
+        <div data-aos="fade-up" style="padding:5px 30px 30px 30px;z-index:1;max-width:100%;list-style:none; transition: none;overflow:hidden;width:750px;height:300px;">
+            <div data-aos="fade-up" id="g-mapdisplay" style="height:100%; width:100%;max-width:100%;">
+                <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=St.+Thomas'+College+of+Engineering+and+Technology,+Diamond+Harbour+Road,+Alipore+Body+Guard+Lines,+Khidirpur,+Kolkata,+West+Bengal,+India&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
+            </div>
+            <a class="embedded-map-code" href="https://www.bootstrapskins.com/themes" id="authorize-maps-data"></a>
+            <style>
+                #g-mapdisplay img {
+                    max-width:none!important;
+                    background:none!important;
+                    font-size: inherit;
+                    font-weight:inherit;
+                }
+            </style>
+        </div>
+        <div data-aos="fade-up" style="padding:5px 30px 30px 30px; position: relative; text-align: center;z-index:1">
+            <img style="z-index:1;width: 650px; height: 300px;" src="./images/front.jpg" alt="">
+            <div data-aos="fade-up" style="position:absolute; bottom: 140px; left: 50%; transform: translateX(-50%); color: white; font-family: sans-serif; text-align: center; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+                <p style="font-weight: bold;">St. Thomas' College of Engineering and Technology</p>
+                <p>Office Number: 6290050679</p>
+                <p>Address: 4, Diamond Harbour Rd, Alipore Body Guard Lines, Khidirpur, Kolkata, West Bengal 700023</p>
+            </div>
+        </div>
+    </div>
+    <div style="height: 400px;width:100%;background-color:#0d0d6b">
+      <div style="display: flex; height:300px">
+        <div style="margin-left:50px;height: 250px;width:280px;background-color:rgb(244, 247, 248);border-radius:0px 0px 20px 20px;text-align:center">
+          <img src="./images/STCET-Logo.png" alt="" style="height: 200px;width:250px;">
+      </div>
+      <div>
+        <h2 style="color:antiquewhite;margin-bottom: 20px;display: block; padding-left:200px">Useful Links</h2>
+        <a href="#" style="color: white; text-decoration: none; margin-bottom: 15px;padding-left:200px;display: block;">Link 1</a>
+        <a href="#" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;padding-left:200px">Link 2</a>
+        <a href="#" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;padding-left:200px">Link 3</a>
+        <a href="#" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;padding-left:200px">Link 4</a>
+        <a href="#" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;padding-left:200px">Link 5</a>
+        <a href="#" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;padding-left:200px">Link 6</a>
+      </div>
+      <div style="height: 300px; width: 600px; text-align: center;">
+        <h2 style="margin-bottom: 10px; color:rgb(253, 252, 250);">Email Us</h2>
+        <p style="margin-bottom: 30px; color:rgb(253, 252, 250);">stcet@stcet.ac.in</p>
+        <div style="display: inline-block;">
+          <form action="mailto:stcet@stcet.ac.in"  method="post" enctype="text/plain">
+            <input  type="text" name="message" style="border-radius: 5px 0px 0px 5px;width: 350px; height: 50px; margin-right: 0;" placeholder="Write your message here...">
+            <button  type="submit" style="width: 100px; height: 50px; background-color: rgb(10, 135, 238); border: none; border-radius: 0px 5px 5px 0px;">Send Email</button>
+            <div style="display: inline-block; margin-top: 10%;">
+              <a href="https://www.facebook.com/STCET.Kolkata/"><img style="height: 50px; width: 50px; margin-right: 30px;" src="./images/facebook (1).png" alt=""></a>
+              <a href="https://www.instagram.com/codigo_stcet/"><img style="height: 50px; width: 50px; margin-right: 30px;" src="./images/instagram.png" alt=""></a>
+              <a href="https://www.linkedin.com/school/st.-thomas'-college-of-engineering-&-technology-122/?originalSubdomain=in"><img style="height: 50px; width: 50px; margin-right: 30px;" src="./images/linkedin.png" alt=""></a>
+          </div>
+
+          
+        </div>
+
+
+      
+      
+      </div>
+      
+    </div>
+    <div style="background-color: #030344; height: 100px; width: 100%; display: flex; justify-content: center; align-items: center;">
+      <p style="color: white; font-size: 14px; font-family: Arial, sans-serif;">&copy; IEE STCET Student Branch</p>
+  </div>
+  
+</div>
+
+  
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+        
+            setInterval(function() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000); // Change slide every 5 seconds
+        });     
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle("show"); // Change to toggle() method
+        }
+    
+        function closeDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.classList.remove("show");
+        }    
+        <!-- java new -->
+        AOS.init({
+          duration: 1000,
+          once: true,
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+          let images = ['./images/codigo.jpg', './images/stcet2.jpeg', './images/stcet3.jpg'];
+          let currentImageIndex = 0;
+          let sliderImage = document.getElementById('sliderImage');
+          
+          setInterval(function() {
+              // Smoothly zoom in and out the image
+              sliderImage.style.animation = '3s ease-in-out';
+              setTimeout(() => {
+                  sliderImage.src = images[currentImageIndex]; // Change image source
+                  currentImageIndex = (currentImageIndex + 1) % images.length; // Move to the next image
+                  sliderImage.style.animation = ''; // Reset animation
+              }, 1500); // Wait for half of the animation duration before changing the image
+          }, 3000); // Change image every 3 seconds
+      });
+      
+      
+        
+        
+    </script>
+    
+</body>
+</html>
